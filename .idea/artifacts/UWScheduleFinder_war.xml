@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="UWScheduleFinder:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="my-website.war">
+      <element id="artifact" artifact-name="UWScheduleFinder:war exploded" />
+    </root>
+  </artifact>
+</component>
