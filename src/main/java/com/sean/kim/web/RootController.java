@@ -55,7 +55,7 @@ public class RootController {
 
         String apiKey = "c533f0b22b5d58a3a15602d5fe91e2e2";
 
-        String[] destPos = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "/examschedule.json?key=" + apiKey, course, section);
+        String[] examDetails = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "/examschedule.json?key=" + apiKey, course, section);
 
         return mav;
     }
