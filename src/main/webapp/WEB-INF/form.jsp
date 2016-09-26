@@ -8,7 +8,10 @@
 <script src="${resourcesPath}/resources/index.js"></script>
 
 <form>
-    Hello
+    TERM CODE: <br><input id="term" type="text" name="term"><br>
+
+    <input id="submit" type="submit" value="Submit">
 </form>
 
 </html>
+

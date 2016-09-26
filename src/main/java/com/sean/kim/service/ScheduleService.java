@@ -9,6 +9,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.net.URI;
  */
 @Service
 public class ScheduleService {
-    public String[] executeGet(String url) throws Exception {
+    public String[] executeGet(String url, String courseCode, String sectionCode) throws Exception {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
@@ -34,9 +35,6 @@ public class ScheduleService {
             method.addHeader("Accept", "application/json");
             method.addHeader("Content-Type", "application/json");
 
-
-
-
             // Parse and check response
             HttpResponse response = httpClient.execute(method);
             ResponseHandler<String> handler = new BasicResponseHandler();
@@ -46,8 +44,9 @@ public class ScheduleService {
             JSONObject jsonObj = new JSONObject(body);
 
 
+            JSONArray jsonArray = (JSONArray) jsonObj.getJSONArray("data");
 
-            return null;
+            return returnExamDetails(jsonArray,courseCode);
 
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
@@ -59,5 +58,25 @@ public class ScheduleService {
                 ex.printStackTrace();
             }
         }
+    }
+    private String[] returnExamDetails(final JSONArray standings, String courseCode, String sectionCode) {
+
+        double[] x= new double[2];
+        for (Object standing : standings) {
+            JSONObject jsonStanding = (JSONObject) standing;
+            if(jsonStanding.get("course").toString().equals(courseCode))
+            {
+                if()
+
+                return x;
+
+            }
+
+
+
+
+//            standingDao.saveStanding(standingPopulator.populateStandingFromJson(jsonStanding));
+        }
+        return x;
     }
 }

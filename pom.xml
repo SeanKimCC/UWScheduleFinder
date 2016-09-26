@@ -156,6 +156,12 @@
       <version>${json.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${javax.jstl.version}</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>my-website</finalName>

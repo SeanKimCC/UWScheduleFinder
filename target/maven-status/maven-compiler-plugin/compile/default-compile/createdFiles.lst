@@ -1,4 +1,5 @@
 com/sean/kim/web/RootController.class
+com/sean/kim/service/ScheduleService.class
 com/sean/kim/config/SpringWebConfig.class
 com/sean/kim/config/SpringRootConfig.class
 com/sean/kim/config/ServicesConfig.class

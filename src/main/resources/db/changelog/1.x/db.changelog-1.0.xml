@@ -9,6 +9,19 @@
 
     <changeSet id="1.0" author="seankim">
 
+        <createTable tableName="UW_EXAM_SCHEDULE">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="EMAIL" type="varchar(255)">
+            </column>
+            <column name="LEVEL" type="varchar(30)">
+            </column>
+            <column name="MESSAGE" type="varchar(255)">
+            </column>
+            <column name="CREATED_ON" type="datetime">
+            </column>
+        </createTable>
 
     </changeSet>
 </databaseChangeLog>

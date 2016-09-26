@@ -1,6 +1,6 @@
 package com.sean.kim.web;
 
-import javafx.concurrent.ScheduledService;
+import com.sean.kim.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -17,36 +17,45 @@ import javax.servlet.http.HttpServletRequest;
 public class RootController {
 
     @Autowired
-    private ScheduledService scheduledService;
+    private ScheduleService scheduleService;
 
     public String term, course, section;
 
-    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView handleRootGetRequest(HttpServletRequest request) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/form.html");
+        return mav;
+    }
+
+    @RequestMapping(value = "/form.html", method = RequestMethod.GET)
+    public ModelAndView handleIndexGetRequest(HttpServletRequest request) throws Exception {
         term = request.getParameter("term");
-        course = request.getParameter("course");
-        section = request.getParameter("section");
 
         ModelAndView mav = new ModelAndView();
         if(term != null)
         {
-            mav.setViewName("redirect:/getschedule");
+            mav.setViewName("redirect:/secondform");
         }
         else
         {
-            mav.setViewName( "index" );
+            mav.setViewName( "form" );
         }
 
         return mav;
     }
 
-    @RequestMapping(value = "/getschedule.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/secondform.html", method = RequestMethod.GET)
     public ModelAndView handleScheduleGetRequest(HttpServletRequest request) throws Exception{
+        course = request.getParameter("course");
+        section = request.getParameter("section");
 
         ModelAndView mav = new ModelAndView();
 
         String apiKey = "c533f0b22b5d58a3a15602d5fe91e2e2";
 
+        String[] destPos = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "examschedule.json&key=" + apiKey, course, section);
 
+        return mav;
     }
 }

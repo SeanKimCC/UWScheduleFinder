@@ -6,6 +6,7 @@ package com.sean.kim.config;
 //import com.enghack.aRIve.service.SendService;
 //import com.enghack.aRIve.service.TtcService;
 //import com.enghack.aRIve.service.XMLParser;
+import com.sean.kim.service.ScheduleService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.sean.kim.*")
 public class ServicesConfig {
+
+    @Bean
+    public ScheduleService scheduleService() {
+        return new ScheduleService();
+    }
 
 
 //    @Bean
