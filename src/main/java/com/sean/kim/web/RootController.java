@@ -31,11 +31,13 @@ public class RootController {
     @RequestMapping(value = "/form.html", method = RequestMethod.GET)
     public ModelAndView handleIndexGetRequest(HttpServletRequest request) throws Exception {
         term = request.getParameter("term");
+        course = request.getParameter("course");
+        section = request.getParameter("section");
 
         ModelAndView mav = new ModelAndView();
         if(term != null)
         {
-            mav.setViewName("redirect:/secondform");
+            mav.setViewName("redirect:/secondform.html");
         }
         else
         {
@@ -47,14 +49,12 @@ public class RootController {
 
     @RequestMapping(value = "/secondform.html", method = RequestMethod.GET)
     public ModelAndView handleScheduleGetRequest(HttpServletRequest request) throws Exception{
-        course = request.getParameter("course");
-        section = request.getParameter("section");
 
         ModelAndView mav = new ModelAndView();
 
         String apiKey = "c533f0b22b5d58a3a15602d5fe91e2e2";
 
-        String[] destPos = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "examschedule.json&key=" + apiKey, course, section);
+        String[] destPos = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "/examschedule.json?key=" + apiKey, course, section);
 
         return mav;
     }

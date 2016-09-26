@@ -1,5 +1,9 @@
 package com.sean.kim.service;
 
+//import com.google.gson.JsonArray;
+//import com.google.gson.JsonElement;
+//import com.google.gson.JsonObject;
+//import com.google.gson.JsonParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
@@ -14,7 +18,11 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 
 /**
  * Created by seankim on 2016-09-25.
@@ -43,10 +51,22 @@ public class ScheduleService {
 
             JSONObject jsonObj = new JSONObject(body);
 
+//            URL url = new URL(stringUrl);
+//            HttpURLConnection request = (HttpURLConnection) url.openConnection();
+//            request.connect();
+
+            // Convert to a JSON object to print data
+//            JsonParser jp = new JsonParser(); //from gson
+//            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+//            JsonObject jsonObj = root.getAsJsonObject(); //May be an array, may be an object.
+//            zipcode = rootobj.get("zip_code").getAsString(); //just grab the zipcode
+
 
             JSONArray jsonArray = (JSONArray) jsonObj.getJSONArray("data");
+//            JsonArray jsonArray = jsonObj.getAsJsonArray("data");
 
-            return returnExamDetails(jsonArray,courseCode);
+
+            return returnExamDetails(jsonArray, courseCode, sectionCode);
 
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
@@ -61,14 +81,22 @@ public class ScheduleService {
     }
     private String[] returnExamDetails(final JSONArray standings, String courseCode, String sectionCode) {
 
-        double[] x= new double[2];
+        String[] info = new String[6];
         for (Object standing : standings) {
             JSONObject jsonStanding = (JSONObject) standing;
             if(jsonStanding.get("course").toString().equals(courseCode))
             {
-                if()
-
-                return x;
+                //for loop here
+                if(jsonStanding.getJSONArray("sections").get(0).toString().equals(sectionCode))
+                {
+                    info[0] = jsonStanding.getJSONObject("sections").get("day").toString();
+                    info[1] = jsonStanding.getJSONObject("sections").get("date").toString();
+                    info[2] = jsonStanding.getJSONObject("sections").get("start_time").toString();
+                    info[3] = jsonStanding.getJSONObject("sections").get("end_time").toString();
+                    info[4] = jsonStanding.getJSONObject("sections").get("location").toString();
+                    info[5] = jsonStanding.getJSONObject("sections").get("notes").toString();
+                    return info;
+                }
 
             }
 
@@ -77,6 +105,6 @@ public class ScheduleService {
 
 //            standingDao.saveStanding(standingPopulator.populateStandingFromJson(jsonStanding));
         }
-        return x;
+        return null;
     }
 }

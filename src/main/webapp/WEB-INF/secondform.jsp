@@ -8,8 +8,7 @@
 <script src="${resourcesPath}/resources/index.js"></script>
 
 <form>
-    COURSE CODE:  <br><input id="course"type="text" name="course"><br>
-    SECTION:  <br><input id="section"type="text" name="section"><br>
+
 
     <input id="submit" type="submit" value="Submit">
 </form>
