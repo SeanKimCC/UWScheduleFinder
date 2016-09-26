@@ -87,16 +87,18 @@ public class ScheduleService {
             if(jsonStanding.get("course").toString().equals(courseCode))
             {
                 //for loop here
-                if(jsonStanding.getJSONArray("sections").get(0).toString().equals(sectionCode))
-                {
-                    info[0] = jsonStanding.getJSONObject("sections").get("day").toString();
-                    info[1] = jsonStanding.getJSONObject("sections").get("date").toString();
-                    info[2] = jsonStanding.getJSONObject("sections").get("start_time").toString();
-                    info[3] = jsonStanding.getJSONObject("sections").get("end_time").toString();
-                    info[4] = jsonStanding.getJSONObject("sections").get("location").toString();
-                    info[5] = jsonStanding.getJSONObject("sections").get("notes").toString();
-                    return info;
+                for(int i = 0; i < jsonStanding.getJSONArray("sections").length() ; i++) {
+                    if (i==Integer.parseInt(sectionCode)-1) {
+                        info[0] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("day").toString();
+                        info[1] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("date").toString();
+                        info[2] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("start_time").toString();
+                        info[3] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("end_time").toString();
+                        info[4] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("location").toString();
+                        info[5] = jsonStanding.getJSONArray("sections").getJSONObject(i).get("notes").toString();
+                        return info;
+                    }
                 }
+                return null;
 
             }
 
@@ -105,6 +107,7 @@ public class ScheduleService {
 
 //            standingDao.saveStanding(standingPopulator.populateStandingFromJson(jsonStanding));
         }
+
         return null;
     }
 }
