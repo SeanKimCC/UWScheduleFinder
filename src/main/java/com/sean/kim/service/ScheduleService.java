@@ -4,6 +4,10 @@ package com.sean.kim.service;
 //import com.google.gson.JsonElement;
 //import com.google.gson.JsonObject;
 //import com.google.gson.JsonParser;
+
+import com.sean.kim.dao.ExamDetailsDao;
+import com.sean.kim.model.ExamDetails;
+import com.sean.kim.model.impl.ExamDetailsImpl;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
@@ -15,20 +19,23 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 
 /**
  * Created by seankim on 2016-09-25.
  */
 @Service
 public class ScheduleService {
+
+    @Autowired
+    ExamDetailsDao examDetailsDao;
+
+
     public String[] executeGet(String url, String courseCode, String sectionCode) throws Exception {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -99,15 +106,26 @@ public class ScheduleService {
                     }
                 }
                 return null;
-
             }
-
-
-
-
-//            standingDao.saveStanding(standingPopulator.populateStandingFromJson(jsonStanding));
         }
 
         return null;
     }
+
+    @Transactional
+    public void saveExamDetails(String[] details)
+    {
+        ExamDetails examDetails = new ExamDetailsImpl();
+        examDetails.setDay( details[0]);
+        examDetails.setDate( details[1]);
+        examDetails.setStartTime( details[2]);
+        examDetails.setEndTime( details[3]);
+        examDetails.setLocation( details[4]);
+        examDetails.setNote( details[5]);
+
+
+        examDetailsDao.saveOrUpdate(examDetails);
+
+    }
+
 }

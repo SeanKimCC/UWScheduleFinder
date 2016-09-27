@@ -2,14 +2,12 @@ package com.sean.kim.web;
 
 import com.sean.kim.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by seankim on 2016-09-24.
@@ -57,6 +55,8 @@ public class RootController {
 
         String[] examDetails = scheduleService.executeGet("https://api.uwaterloo.ca/v2/terms/" + term + "/examschedule.json?key=" + apiKey, course, section);
 
+        scheduleService.saveExamDetails(examDetails);
+        
         return mav;
     }
 }

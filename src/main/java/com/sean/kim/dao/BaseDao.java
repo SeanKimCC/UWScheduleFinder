@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
         @SuppressWarnings("unchecked")
         @Transactional(propagation = Propagation.REQUIRED)
-        public void update(I object) {
+        public void saveOrUpdate(I object) {
             this.currentSession().saveOrUpdate(object);
         }
 
